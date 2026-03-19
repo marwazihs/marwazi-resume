@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marwazi Siagian | Payments Leader</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
+
+        :root {
+            --bg: #f0f6fa;
+            --surface: #ffffff;
+            --surface-2: #e4f0f7;
+            --border: #c8dde9;
+            --text: #023047;
+            --text-muted: #3a6a82;
+            --accent: #219EBC;
+            --accent-glow: rgba(33, 158, 188, 0.25);
+            --accent-2: #FB8500;
+            --accent-3: #FFB703;
+            --gradient-1: linear-gradient(135deg, #219EBC, #023047);
+            --gradient-2: linear-gradient(135deg, #FFB703, #FB8500);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent) #dce8f0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(2, 48, 71, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(2, 48, 71, 0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .bg-orbs {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .orb-1 { width: 500px; height: 500px; background: #8ECAE6; top: -10%; left: -5%; animation-delay: 0s; }
+        .orb-2 { width: 400px; height: 400px; background: #FFB703; top: 40%; right: -10%; animation-delay: -7s; }
+        .orb-3 { width: 350px; height: 350px; background: #219EBC; bottom: -5%; left: 30%; animation-delay: -14s; }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.05); }
+            66% { transform: translate(-20px, 20px) scale(0.95); }
+        }
+
+        .cursor-glow {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(142, 202, 230, 0.3) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s;
+            opacity: 0;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            padding: 1rem 2rem;
+            backdrop-filter: blur(20px);
+            background: rgba(240, 246, 250, 0.8);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        nav.scrolled {
+            padding: 0.6rem 2rem;
+            background: rgba(240, 246, 250, 0.95);
+        }
+
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-weight: 800;
+            font-size: 1.2rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-1);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--text); }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-links a.active { color: var(--accent); }
+        .nav-links a.active::after { width: 100%; }
+
+        main { position: relative; z-index: 2; }
+
+        section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 5rem;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 3rem;
+            align-items: center;
+            width: 100%;
+        }
+
+        .hero-text { animation: fadeUp 1s ease-out; }
+
+        .hero-photo-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeUp 1s ease-out 0.3s both;
+        }
+
+        .hero-photo {
+            position: relative;
+            width: 220px;
+            height: 220px;
+        }
+
+        .hero-photo::before {
+            content: '';
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            background: var(--gradient-1);
+            z-index: 0;
+        }
+
+        .hero-photo::after {
+            content: '';
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            background: var(--gradient-2);
+            z-index: 0;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .hero-photo:hover::after { opacity: 1; }
+
+        .hero-photo img {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--surface);
+            box-shadow: 0 8px 30px rgba(2, 48, 71, 0.15);
+            transition: transform 0.4s;
+        }
+
+        .hero-photo:hover img {
+            transform: scale(1.03);
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1rem;
+            background: rgba(33, 158, 188, 0.1);
+            border: 1px solid rgba(33, 158, 188, 0.25);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-badge .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #10b981;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 .gradient {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-summary {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+
+        .hero-cta { display: flex; gap: 1rem; }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.8rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--gradient-1);
+            color: white;
+            box-shadow: 0 4px 20px var(--accent-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px var(--accent-glow);
+        }
+
+        .btn-secondary {
+            background: var(--surface-2);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border);
+            transform: translateY(-2px);
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            animation: fadeUp 1s ease-out 0.2s both;
+        }
+
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(2, 48, 71, 0.06);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--gradient-1);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+        }
+
+        .stat-card:hover::before { opacity: 0.05; }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-header {
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s;
+        }
+
+        .section-header.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        #experience { padding: 6rem 2rem; }
+
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent), var(--accent-2), transparent);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.6s;
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -3rem;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 3px solid var(--surface);
+            transform: translateX(-5px);
+            z-index: 2;
+        }
+
+        .timeline-item:first-child .timeline-dot {
+            box-shadow: 0 0 0 4px var(--accent-glow);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .exp-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.8rem;
+            transition: all 0.3s;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(2, 48, 71, 0.06);
+        }
+
+        .exp-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 30px rgba(33, 158, 188, 0.15);
+        }
+
+        .exp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.8rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .exp-company {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--accent-2);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .exp-date {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .exp-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .exp-location {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .exp-bullets {
+            list-style: none;
+            display: none;
+        }
+
+        .exp-bullets.open { display: block; }
+
+        .exp-bullets li {
+            position: relative;
+            padding-left: 1.2rem;
+            margin-bottom: 0.6rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .exp-bullets li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.65rem;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        .exp-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.8rem;
+            color: var(--accent);
+            cursor: pointer;
+            margin-top: 0.5rem;
+            background: none;
+            border: none;
+            font-family: inherit;
+            font-weight: 500;
+        }
+
+        .exp-toggle .arrow {
+            transition: transform 0.3s;
+            display: inline-block;
+        }
+
+        .exp-toggle.open .arrow { transform: rotate(180deg); }
+
+        .metrics-bar {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            margin-top: 0.8rem;
+        }
+
+        .metric {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.3rem 0.8rem;
+            background: rgba(33, 158, 188, 0.1);
+            border: 1px solid rgba(33, 158, 188, 0.2);
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        #skills { padding: 6rem 2rem; }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .skill-category {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.4s;
+            box-shadow: 0 2px 8px rgba(2, 48, 71, 0.06);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .skill-category.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .skill-category:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+        }
+
+        .skill-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .skill-icon.payments { background: rgba(33, 158, 188, 0.15); }
+        .skill-icon.tech { background: rgba(2, 48, 71, 0.1); }
+        .skill-icon.leadership { background: rgba(251, 133, 0, 0.15); }
+
+        .skill-cat-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            padding: 0.3rem 0.7rem;
+            background: var(--surface-2);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            transition: all 0.3s;
+            cursor: default;
+        }
+
+        .skill-tag:hover {
+            background: rgba(33, 158, 188, 0.15);
+            color: var(--accent);
+        }
+
+        #credentials { padding: 6rem 2rem; }
+
+        .credentials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .credential-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.4s;
+            box-shadow: 0 2px 8px rgba(2, 48, 71, 0.06);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .credential-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .credential-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+        }
+
+        .credential-icon { font-size: 2rem; margin-bottom: 1rem; }
+
+        .credential-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .credential-sub {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .credential-detail {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        #contact { padding: 6rem 2rem 4rem; }
+
+        .contact-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(2, 48, 71, 0.06);
+        }
+
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--gradient-1);
+            opacity: 0.03;
+        }
+
+        .contact-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .contact-desc {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            position: relative;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.7rem 1.5rem;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .contact-link:hover {
+            border-color: var(--accent);
+            background: rgba(33, 158, 188, 0.1);
+            transform: translateY(-2px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 900px) {
+            .hero-content { grid-template-columns: 1fr; gap: 2rem; }
+            .hero-photo-wrapper { order: -1; }
+            .hero-photo { width: 180px; height: 180px; }
+            .hero h1 { font-size: 2.5rem; }
+            .skills-grid { grid-template-columns: 1fr; }
+            .credentials-grid { grid-template-columns: 1fr; }
+            .nav-toggle { display: block; }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: rgba(240, 246, 250, 0.97);
+                backdrop-filter: blur(20px);
+                padding: 1rem 2rem;
+                gap: 1rem;
+                border-bottom: 1px solid var(--border);
+            }
+            .nav-links.open { display: flex; }
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 2rem; }
+            .hero-stats { grid-template-columns: 1fr; }
+            .contact-links { flex-direction: column; align-items: center; }
+            section { padding-left: 1rem; padding-right: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+</div>
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<nav id="navbar">
+    <div class="nav-inner">
+        <div class="nav-logo">MS</div>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">&#9776;</button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#hero" class="active">Home</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#credentials">Credentials</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main>
+
+<section class="hero" id="hero">
+    <div class="hero-content">
+        <div class="hero-text">
+            <div class="hero-badge">
+                <span class="dot"></span>
+                VP at Mastercard
+            </div>
+            <h1>
+                Marwazi<br>
+                <span class="gradient">Siagian</span>
+            </h1>
+            <p class="hero-summary">
+                Leader in Payments with 15+ years driving growth at scale at
+                <strong>Mastercard</strong>, <strong>Alipay</strong>, and <strong>Lazada</strong>.
+                Global experience building, launching, and managing highly regulated payment products across multiple regions.
+            </p>
+            <div class="hero-cta">
+                <a href="#contact" class="btn btn-primary">Get in Touch &#8594;</a>
+                <a href="#experience" class="btn btn-secondary">View Experience</a>
+            </div>
+        </div>
+        <div class="hero-photo-wrapper">
+            <div class="hero-photo">
+                <img src="marwazi.jpeg" alt="Marwazi Siagian">
+            </div>
+        </div>
+        <div class="hero-stats">
+            <div class="stat-card">
+                <div class="stat-number"><span class="count-up" data-target="15">0</span>+</div>
+                <div class="stat-label">Years in Payments</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number"><span class="count-up" data-target="1.5" data-decimals="1">0</span>B</div>
+                <div class="stat-label">Incremental Transactions Delivered</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number"><span class="count-up" data-target="60">0</span>M+</div>
+                <div class="stat-label">Cards Enabled for Online Pay</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number"><span class="count-up" data-target="6">0</span></div>
+                <div class="stat-label">SE Asia Markets Covered</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="experience">
+    <div class="section-header">
+        <div class="section-label">// Career Journey</div>
+        <h2 class="section-title">Professional Experience</h2>
+    </div>
+
+    <div class="timeline">
+        <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="exp-card" onclick="toggleBullets(this)">
+                <div class="exp-header">
+                    <div>
+                        <div class="exp-company">Mastercard</div>
+                        <div class="exp-title">VP, Switching Growth Products & Strategy</div>
+                        <div class="exp-location">New York, US</div>
+                    </div>
+                    <div class="exp-date">Jul 2023 - Present</div>
+                </div>
+                <div class="metrics-bar">
+                    <span class="metric">+2ppt switching share</span>
+                    <span class="metric">+1.5B transactions</span>
+                    <span class="metric">+300M annual txns</span>
+                </div>
+                <ul class="exp-bullets">
+                    <li>Owned switching growth portfolios: Switching as a Service, Co-Switching Partnerships, and On-Us Switching Optimizer</li>
+                    <li>Delivered +1.5B incremental switching transactions in 2024 through strategic programs in key markets</li>
+                    <li>Launched co-switching partnerships with local/national switches across MEA and Latin America</li>
+                    <li>Managed high-performing product & strategy team of seven</li>
+                    <li>Created executive-level switching KPI report for C-suite leadership</li>
+                </ul>
+                <button class="exp-toggle">Show details <span class="arrow">&#9660;</span></button>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="exp-card" onclick="toggleBullets(this)">
+                <div class="exp-header">
+                    <div>
+                        <div class="exp-company">Mastercard</div>
+                        <div class="exp-title">VP, Product Solutioning, A2A & Bill Payments</div>
+                        <div class="exp-location">New York, US</div>
+                    </div>
+                    <div class="exp-date">Nov 2021 - Jul 2023</div>
+                </div>
+                <div class="metrics-bar">
+                    <span class="metric">A2A RTP Rollout</span>
+                    <span class="metric">Open Banking</span>
+                </div>
+                <ul class="exp-bullets">
+                    <li>Rolled out interoperable A2A request-to-pay solutions across APAC and Europe</li>
+                    <li>Piloted A2A wallet top-up payment in the Philippines with BancNet</li>
+                    <li>Oversaw Pay by Bank App's Open Banking integration for UK market</li>
+                    <li>Led product integration of Mastercard BillPay across European markets</li>
+                </ul>
+                <button class="exp-toggle">Show details <span class="arrow">&#9660;</span></button>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="exp-card" onclick="toggleBullets(this)">
+                <div class="exp-header">
+                    <div>
+                        <div class="exp-company">Mastercard</div>
+                        <div class="exp-title">Director, Product Development, Pay by Wallet</div>
+                        <div class="exp-location">New York, US</div>
+                    </div>
+                    <div class="exp-date">Nov 2018 - Nov 2021</div>
+                </div>
+                <div class="metrics-bar">
+                    <span class="metric">Alipay Partnership</span>
+                    <span class="metric">Tokenization</span>
+                    <span class="metric">Apple Pay & Google Pay</span>
+                </div>
+                <ul class="exp-bullets">
+                    <li>Drove product development of Pay by Wallet, piloted partnership with three wallets in APAC including Alipay China</li>
+                    <li>Oversaw Zapp, an ISO 20022-based payment processor over Mastercard's acceptance network</li>
+                    <li>Led tokenization service integration with Apple Pay and Google Pay</li>
+                    <li>Directed cross-functional team across Product, Architecture, Engineering, BizOps, Franchise and UX</li>
+                </ul>
+                <button class="exp-toggle">Show details <span class="arrow">&#9660;</span></button>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="exp-card" onclick="toggleBullets(this)">
+                <div class="exp-header">
+                    <div>
+                        <div class="exp-company">Mastercard</div>
+                        <div class="exp-title">Director, Business Development, Digital Partnership</div>
+                        <div class="exp-location">Jakarta, Indonesia</div>
+                    </div>
+                    <div class="exp-date">Oct 2016 - Oct 2018</div>
+                </div>
+                <div class="metrics-bar">
+                    <span class="metric">1M+ merchants</span>
+                    <span class="metric">60M+ cards enabled</span>
+                    <span class="metric">2x monthly volume</span>
+                </div>
+                <ul class="exp-bullets">
+                    <li>Secured fintech, telco, and wallet partnerships bringing 1M+ merchant acceptance points</li>
+                    <li>Enabled 60M+ Mastercard debit cards for online payment via 3DS authentication</li>
+                    <li>Secured gateway deals resulting in 2x monthly transaction volume within one year</li>
+                    <li>Established switching partnership with domestic switch achieving 100% regulatory compliance</li>
+                </ul>
+                <button class="exp-toggle">Show details <span class="arrow">&#9660;</span></button>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="exp-card" onclick="toggleBullets(this)">
+                <div class="exp-header">
+                    <div>
+                        <div class="exp-company">Alibaba Group</div>
+                        <div class="exp-title">Chief Product Officer, HelloPay Wallet (now Alipay)</div>
+                        <div class="exp-location">Jakarta, Indonesia</div>
+                    </div>
+                    <div class="exp-date">Jun 2015 - Sep 2016</div>
+                </div>
+                <div class="metrics-bar">
+                    <span class="metric">Co-Founder</span>
+                    <span class="metric">30+ team members</span>
+                    <span class="metric">3 SE Asia markets</span>
+                </div>
+                <ul class="exp-bullets">
+                    <li>Co-founded and drove product strategy for HelloPay Wallet across three SE Asia markets, managing P&L</li>
+                    <li>Scaled product organization from startup to 30+ cross-functional team members</li>
+                    <li>Oversaw platform integration into Alipay's core system post-acquisition within 6 months</li>
+                </ul>
+                <button class="exp-toggle">Show details <span class="arrow">&#9660;</span></button>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="exp-card" onclick="toggleBullets(this)">
+                <div class="exp-header">
+                    <div>
+                        <div class="exp-company">Lazada (Alibaba Group)</div>
+                        <div class="exp-title">Payment Partnership Head</div>
+                        <div class="exp-location">Jakarta, Indonesia</div>
+                    </div>
+                    <div class="exp-date">Apr 2014 - May 2015</div>
+                </div>
+                <div class="metrics-bar">
+                    <span class="metric">90% payment coverage</span>
+                    <span class="metric">10+ methods</span>
+                    <span class="metric">US$3M daily GMV</span>
+                </div>
+                <ul class="exp-bullets">
+                    <li>Captured 90% of available payment options across Indonesia, Singapore, Malaysia, and the Philippines</li>
+                    <li>Integrated 10+ payment methods across six SE Asia markets, lowering checkout abandon rate by 30%</li>
+                </ul>
+                <button class="exp-toggle">Show details <span class="arrow">&#9660;</span></button>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="exp-card" onclick="toggleBullets(this)">
+                <div class="exp-header">
+                    <div>
+                        <div class="exp-company">Audienova</div>
+                        <div class="exp-title">Co-Founder & CTO</div>
+                        <div class="exp-location">Jakarta, Indonesia</div>
+                    </div>
+                    <div class="exp-date">Aug 2012 - Mar 2014</div>
+                </div>
+                <ul class="exp-bullets">
+                    <li>Co-founded managed service ecommerce platform for retailers</li>
+                    <li>Served ten key clients including Lazada, managing platform implementations and payment integration</li>
+                </ul>
+                <button class="exp-toggle">Show details <span class="arrow">&#9660;</span></button>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="exp-card" onclick="toggleBullets(this)">
+                <div class="exp-header">
+                    <div>
+                        <div class="exp-company">Infinitium</div>
+                        <div class="exp-title">Senior Manager, Business Development</div>
+                        <div class="exp-location">Jakarta, Indonesia</div>
+                    </div>
+                    <div class="exp-date">Mar 2009 - Mar 2011</div>
+                </div>
+                <ul class="exp-bullets">
+                    <li>Pioneered the first 3DS card payment authentication services with Visa and Mastercard in Indonesia</li>
+                </ul>
+                <button class="exp-toggle">Show details <span class="arrow">&#9660;</span></button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="skills">
+    <div class="section-header">
+        <div class="section-label">// Expertise</div>
+        <h2 class="section-title">Skills & Capabilities</h2>
+    </div>
+
+    <div class="skills-grid">
+        <div class="skill-category">
+            <div class="skill-icon payments">&#128179;</div>
+            <div class="skill-cat-title">Payments Expertise</div>
+            <div class="skill-tags">
+                <span class="skill-tag">Mobile Wallets</span>
+                <span class="skill-tag">Card Switching & Processing</span>
+                <span class="skill-tag">Acceptance & Gateways</span>
+                <span class="skill-tag">A2A Real-Time Payments</span>
+                <span class="skill-tag">Tokenization</span>
+                <span class="skill-tag">Prepaid & e-Money</span>
+                <span class="skill-tag">Open Banking</span>
+                <span class="skill-tag">Security & Fraud Prevention</span>
+                <span class="skill-tag">3DS Authentication</span>
+                <span class="skill-tag">Dispute Management</span>
+            </div>
+        </div>
+        <div class="skill-category">
+            <div class="skill-icon tech">&#128187;</div>
+            <div class="skill-cat-title">Technical</div>
+            <div class="skill-tags">
+                <span class="skill-tag">APIs</span>
+                <span class="skill-tag">ISO 8583</span>
+                <span class="skill-tag">ISO 20022</span>
+                <span class="skill-tag">SQL</span>
+                <span class="skill-tag">Python</span>
+                <span class="skill-tag">Cloud Infrastructure</span>
+                <span class="skill-tag">Machine Learning</span>
+                <span class="skill-tag">Agentic AI & LLM</span>
+                <span class="skill-tag">Automation</span>
+            </div>
+        </div>
+        <div class="skill-category">
+            <div class="skill-icon leadership">&#127919;</div>
+            <div class="skill-cat-title">Leadership & Strategy</div>
+            <div class="skill-tags">
+                <span class="skill-tag">Business Development</span>
+                <span class="skill-tag">GTM Strategy</span>
+                <span class="skill-tag">Product Management</span>
+                <span class="skill-tag">P&L Management</span>
+                <span class="skill-tag">People Leadership</span>
+                <span class="skill-tag">Project Management</span>
+                <span class="skill-tag">Partnership</span>
+                <span class="skill-tag">Regulatory Landscapes</span>
+                <span class="skill-tag">Payment Growth Strategy</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="credentials">
+    <div class="section-header">
+        <div class="section-label">// Credentials</div>
+        <h2 class="section-title">Education, Patent & More</h2>
+    </div>
+
+    <div class="credentials-grid">
+        <div class="credential-card">
+            <div class="credential-icon">&#127891;</div>
+            <div class="credential-title">B.S. Computer Science</div>
+            <div class="credential-sub">Parahyangan University</div>
+            <div class="credential-detail">Bandung, Indonesia &middot; 1998 - 2003</div>
+        </div>
+        <div class="credential-card">
+            <div class="credential-icon">&#128220;</div>
+            <div class="credential-title">US Patent</div>
+            <div class="credential-sub">Managing Secure Document Exchanges</div>
+            <div class="credential-detail">US11361112B2 &middot; Issued Jun 14, 2022</div>
+        </div>
+        <div class="credential-card">
+            <div class="credential-icon">&#127760;</div>
+            <div class="credential-title">Languages</div>
+            <div class="credential-sub">English (Fluent) &middot; Indonesian (Native)</div>
+            <div class="credential-detail">Based in New York, NY</div>
+        </div>
+    </div>
+</section>
+
+<section id="contact">
+    <div class="contact-card">
+        <h2 class="contact-title">Let's Connect</h2>
+        <p class="contact-desc">Open to conversations about payments strategy, partnerships, and innovation.</p>
+        <div class="contact-links">
+            <a href="mailto:marwazisiagian@gmail.com" class="contact-link">&#9993; marwazisiagian@gmail.com</a>
+            <a href="tel:+19143063541" class="contact-link">&#128222; (914) 306-3541</a>
+            <a href="https://www.linkedin.com/in/marwazisiagian" target="_blank" class="contact-link">&#128279; LinkedIn</a>
+        </div>
+    </div>
+</section>
+
+</main>
+
+<footer>
+    &copy; 2026 Marwazi Siagian. All rights reserved.
+</footer>
+
+<script>
+    const glow = document.getElementById('cursorGlow');
+    let glowVisible = false;
+    document.addEventListener('mousemove', (e) => {
+        if (!glowVisible) { glow.style.opacity = '1'; glowVisible = true; }
+        glow.style.left = e.clientX + 'px';
+        glow.style.top = e.clientY + 'px';
+    });
+
+    const nav = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    document.getElementById('navToggle').addEventListener('click', () => {
+        document.getElementById('navLinks').classList.toggle('open');
+    });
+
+    const sections = document.querySelectorAll('section[id], .hero');
+    const navAnchors = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(s => {
+            const top = s.offsetTop - 120;
+            if (window.scrollY >= top) current = s.getAttribute('id') || 'hero';
+        });
+        navAnchors.forEach(a => {
+            a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+        });
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) e.target.classList.add('visible');
+        });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.section-header, .timeline-item, .skill-category, .credential-card').forEach(el => {
+        observer.observe(el);
+    });
+
+    const countObserver = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                const el = e.target;
+                const target = parseFloat(el.dataset.target);
+                const decimals = parseInt(el.dataset.decimals) || 0;
+                const duration = 2000;
+                const start = performance.now();
+                const animate = (now) => {
+                    const progress = Math.min((now - start) / duration, 1);
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    el.textContent = (target * eased).toFixed(decimals);
+                    if (progress < 1) requestAnimationFrame(animate);
+                    else el.textContent = target % 1 === 0 ? target.toString() : target.toFixed(decimals);
+                };
+                requestAnimationFrame(animate);
+                countObserver.unobserve(el);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.count-up').forEach(el => countObserver.observe(el));
+
+    function toggleBullets(card) {
+        const bullets = card.querySelector('.exp-bullets');
+        const toggle = card.querySelector('.exp-toggle');
+        if (!bullets || !toggle) return;
+        const isOpen = bullets.classList.toggle('open');
+        toggle.classList.toggle('open', isOpen);
+        toggle.innerHTML = isOpen
+            ? 'Hide details <span class="arrow" style="transform:rotate(180deg)">&#9660;</span>'
+            : 'Show details <span class="arrow">&#9660;</span>';
+    }
+
+    document.querySelectorAll('.nav-links a').forEach(a => {
+        a.addEventListener('click', () => {
+            document.getElementById('navLinks').classList.remove('open');
+        });
+    });
+</script>
+
+</body>
+</html>
